@@ -1,3 +1,13 @@
+<?php
+// 確認ページ
+session_start();
+// 入力情報が正しく入力されていないときに確認ページに遷移した場合の処理
+if (!isset($_SESSION['join'])) {
+	// $_SESSION['join']に値が保存されていなかった場合、強制的にトップページに遷移させる
+	header('Location: index.php');
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -21,8 +31,10 @@
 	<dl>
 		<dt>ニックネーム</dt>
 		<dd>
+		<?php print(htmlspecialchars($_SESSION['join']['name'], ENT_QUOTES)); ?>
         </dd>
 		<dt>メールアドレス</dt>
+		<?php print(htmlspecialchars($_SESSION['join']['email'],ENT_QUOTES)); ?>
 		<dd>
         </dd>
 		<dt>パスワード</dt>

@@ -1,5 +1,8 @@
 <!-- エラーの確認 -->
 <?php
+// 入力内容をセッションに保存する
+session_start();
+
 if (!empty($_POST)) {
 	if ($_POST['name'] === '') {
 		$error['name'] = 'blank';
@@ -16,11 +19,18 @@ if (!empty($_POST)) {
 	}
 	// エラーがないときにcheck.phpにジャンプする
 	if (empty($error)) {
+		// エラーがないことを確認したら入力内容をセッションに保存する
+		$_SESSION['join'] = $_POST;
 		header('Location: check.php');
 		exit();
 	}
 	error_reporting(E_ALL & ~E_NOTICE);
 }
+// 確認ページで書き直すを選択した場合の処理(入力データの保持)
+if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
+	$_POST = $_SESSION['join'];
+}
+
 ?>
 
 
